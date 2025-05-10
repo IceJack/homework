@@ -1,0 +1,224 @@
+:root {
+  --default-font-size: 1rem;
+  --default-font-color: #121212;
+  --pc-mode-min-width: 48em;
+  --button-default-font-color: #fff;
+
+  --error-text-font-size: 0.75rem;
+  --error-text-font-color: #ff1414;
+
+  --input-font-size: 0.875rem;
+  --input-text-height: 2.8125rem;
+  --form-button-height: 2.8125rem;
+  --form-button-width: 100%;
+  --form-button-background-color: #03cf5d;
+  --form-button-margin: 1.25rem;
+
+  --input-text-none-focus-border-color: #dadada;
+  --input-text-none-focus-fill-color: #fff;
+
+  --input-text-focus-border-color: #03cf5d;
+  --input-text-focus-fill-color: #e9f0fd;
+
+  --input-pc-width: 31.25rem;
+
+  --ip-Security-font-size: 1rem;
+  --ip-Security-font-color: #121212;
+  --input-checkbox-checked-color: #03cf5d;
+  --input-checkbox-unchecked-color: #999999;
+}
+
+/* 필요한 초기화 */
+body,
+div,
+input,
+svg,
+p {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* 기본 스타일 */
+body {
+  font-size: var(--default-font-size);
+  color: var(--default-font-color);
+}
+
+/* 중앙 정렬, 상단 마진 */
+.logoContainer {
+  text-align: center;
+  margin-top: 4.375rem;
+}
+
+/* 로고랑 떨어트리기 */
+.formInput {
+  margin-bottom: 10px;
+  height: auto;
+}
+
+/* 에러 텍스트 기본 설정 */
+.errorText {
+  font-size: var(--error-text-font-size);
+  color: var(--error-text-font-color);
+  text-align: left;
+  margin-left: 0.875rem;
+  height: 0px;
+  visibility: hidden;
+}
+
+/* user-invalid로 submit때만 체크, 동시에 + .errorText로 해당 태그 선택해서 보여주기, 높이를 0px로 숨겼었기때문에 auto로 공간확보 */
+input:user-invalid + .errorText {
+  visibility: visible;
+  height: auto;
+}
+
+/* 로그인 기본 폼 저장 */
+.loginContainer {
+  text-align: center;
+  padding: 0 0.9375rem;
+  margin-top: 2.8125rem;
+
+  [type='email'],
+  [type='password'] {
+    height: var(--input-text-height);
+    border: 1px solid var(--input-text-none-focus-border-color);
+    background-color: var(--input-text-none-focus-fill-color);
+    padding: 0.875rem;
+    width: 100%;
+  }
+
+  /* 포커스시 기본 포커스형태 사용 안하기 */
+  [type='email']:focus,
+  [type='password']:focus {
+    outline-color: var(--input-text-focus-border-color);
+    background-color: var(--input-text-focus-fill-color);
+  }
+}
+
+/* 로그인 버튼 */
+.loginButton {
+  font-size: var(--default-font-size);
+  height: var(--form-button-height);
+  color: var(--button-default-font-color);
+  background-color: var(--form-button-background-color);
+  border: 0;
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* flex나 grid를 없이 사용하기 위해 display를 inline으로 두기 */
+.saveLoginBtnContainer {
+  display: inline;
+}
+
+/* 모바일 기준으로 작업을 하기 위해 우선 우측정렬 */
+.bottomInput {
+  text-align: right;
+}
+
+/* 커스텀 체크박스를 사용하기위해 가려버림, 좋은 방식일까? */
+.bottomInput input[type='checkbox'] {
+  width: 0;
+  height: 0;
+}
+
+/* 커서 포인터 옵션을 안주면 버튼인지 모를 수 있으니까. */
+.bottomInput label {
+  user-select: none;
+  cursor: pointer;
+}
+
+/* 내 방식은 체크박스의 크기를 줄였기때문에 자연스럽게 아웃라인이 생성되지 않는 문제 발생..., 이걸 해결하기 위해 각 라벨들에게 직접 outline을 설정해줬다, 색상은 브라우저별 기본 색상을 가져오도록 */
+.bottomInput .saveLoginBtnContainer input[type='checkbox']:focus + label::before,
+.bottomInput .ipSecurityBtnContainer input[type='checkbox']:focus + label {
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+/* 앵커태그 초기화  */
+.ipSecurityBtnContainer a {
+  color: var(--ip-Security-font-color);
+  font-size: var(--ip-Security-font-size);
+  text-decoration-line: none;
+  margin-right: 8px;
+}
+
+/* 체크박스를 텍스트로 대체함 */
+.toggleText::after {
+  content: 'OFF';
+  font-weight: 900;
+  color: var(--input-checkbox-unchecked-color);
+}
+
+/* 체크되어있을시 */
+#ipSecurity:checked + label .toggleText::after {
+  content: 'ON';
+  color: var(--input-checkbox-checked-color);
+}
+
+/* before를 사용하기 위한 설정, user-select으로 드래그 방지 */
+.bottomInput .saveLoginBtnContainer label {
+  position: relative;
+  padding-left: 32px;
+  cursor: pointer;
+  line-height: 24px;
+  display: inline-block;
+  user-select: none;
+}
+
+/* 체크박스대신 svg를 사용하기 위해 크기를 잡아주고 백그라운드로 svg를 사용해보았다, html에서 요소를 두개 만들고 번갈아 보여주는 방법도 있지만 이쪽이 멋있어보임 */
+.bottomInput .saveLoginBtnContainer label::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background-image: url('../assets/save_unchecked.svg');
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+}
+
+/* 체크시 이미지 변경 */
+.bottomInput .saveLoginBtnContainer input[type='checkbox']:checked + label::before {
+  background-image: url('../assets/save_checked.svg');
+}
+
+/* 초기화 및 가려버리기 (모바일 기준이니까!) */
+.ipSecurityBtnContainer {
+  display: none;
+  color: var(--ip-Security-font-color);
+  font-size: var(--ip-Security-font-size);
+}
+
+/* 미디어쿼리, 최소 크기가 768px 이상일경우를 의미함 */
+/* 어째선지 여기는 var가 안먹히는거같다? */
+@media (min-width: 48em) {
+  .loginContainer {
+    width: var(--input-pc-width);
+    margin: 0 auto;
+    margin-top: 2.8125rem;
+  }
+
+  .bottomInput {
+    text-align: left; /* PC에서 로그인 상태 유지 버튼은 좌측으로 밀어버리기, IP보안은 플로트 이용, 우측 끝에 붙여버림 */
+  }
+
+  .ipSecurityBtnContainer {
+    display: inline;
+    float: right;
+  }
+}
+
+/* 스크린 리더 온리, 잘 쓴걸까? */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  border: 0;
+}
