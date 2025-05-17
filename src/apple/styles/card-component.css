@@ -1,3 +1,97 @@
-@import "./reset.css";
-@import "./theme.css";
-@import "./base.css";
+@import './reset.css';
+@import './theme.css';
+@import './base.css';
+
+.cardComponent {
+  height: var(--size);
+  text-align: center;
+  background-size: cover;
+  padding-top: var(--large-spacing);
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .cardTitle {
+    font-size: var(--large-text);
+    font-weight: bold;
+    margin-bottom: var(--small-spacing);
+  }
+
+  .description {
+    font-size: var(--base-text);
+    font-weight: 600;
+    line-height: var(--line-normal);
+    margin-bottom: var(--x-small-spacing);
+  }
+
+  .releaseText {
+    font-size: var(--small-text);
+    color: var(--gray);
+    margin-bottom: var(--x-small-spacing);
+  }
+
+  .linkBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--base-spacing);
+
+    a {
+      padding: var(--x-small-spacing) var(--small-spacing);
+
+      border: 1px solid var(--blue-100);
+      border-radius: 20px;
+
+      &.moreInfo {
+        background-color: var(--blue-100);
+      }
+
+      &.viewPrice {
+        color: var(--blue-100);
+      }
+    }
+  }
+
+  &:nth-of-type(even) {
+    .linkBar {
+      a {
+        border: 1px solid var(--black);
+        &.moreInfo {
+          background-color: var(--black);
+          color: var(--white);
+        }
+
+        &.viewPrice {
+          color: var(--black);
+        }
+      }
+    }
+  }
+
+  @media (min-width: 64rem) {
+    padding-top: var(--extra-large-spacing);
+
+    br {
+      display: none;
+    }
+
+    .cardTitle {
+      font-size: var(--extra-large-text);
+    }
+
+    .description {
+      font-size: var(--medium-text);
+    }
+  }
+}
+
+.cardComponent:not(.noneDate) .releaseText {
+  display: none;
+}
+
+.gridContainer {
+  color: var(--black);
+
+  .cardComponent:nth-of-type(odd) {
+    color: var(--white);
+  }
+}
